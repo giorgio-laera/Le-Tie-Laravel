@@ -14,7 +14,9 @@
     <textarea name="description" id="descriprion"  rows="10"></textarea>
   </div>
   
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="{{route('products.index')}}" class="btn btn-outline-secondary">Annulla</a>
+  <button type="submit" class="btn btn-outline-primary">Crea</button>
 </form>
+  
 
 @endsection

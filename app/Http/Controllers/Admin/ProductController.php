@@ -55,17 +55,23 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        return view('products.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $data = $request->all();
+
+        $product->name=$data['name'];
+        $product->description=$data['description'];
+
+        $product->update();
+        return redirect()->route('products.show', $product);
     }
 
     /**
@@ -73,6 +79,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+                $product->delete();
+
+        return redirect()->route('products.index');
     }
 }
