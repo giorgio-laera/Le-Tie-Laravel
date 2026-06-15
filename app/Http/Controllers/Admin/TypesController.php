@@ -30,7 +30,24 @@ class TypesController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+        'name' => 'required|string|max:255',
+        
+        // Controlla che il colore sia HEX e che NON esista già nella tabella 'types' sotto la colonna 'color'
+        'color' => [
+            'required',
+            'string',
+            'hex_color',
+            'unique:types,color' 
+        ],
+    ], [
+        //  Compone il messaggio di errore per l'utente
+        'color.unique' => 'Questo colore è già stato assegnato a un altro tipo. Scegline uno diverso.',
+    ]);
+        //altrimenti lo modifica
         $data=$request->all();
+
         // dd($data);
         $newType= new Type();
         $newType->name=$data['name'];
@@ -60,14 +77,36 @@ class TypesController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Type $type)
-    {
+    { 
         $data=$request->all();
+        // controlla se il nuovo colore se diverso allora: Controlla che il colore sia HEX e che NON esista già nella tabella 'types' sotto la colonna 'color'
+        if( $type->color!=$data['color']){
+
+    
+              $request->validate([
+        'name' => 'required|string|max:255',
+        
+        // Controlla che il colore sia HEX e che NON esista già nella tabella 'products' sotto la colonna 'color'
+        'color' => [
+            'required',
+            'string',
+            'hex_color',
+            'unique:types,color' 
+        ],
+    ], [
+        // Compone il messaggio di errore per l'utente
+        'color.unique' => 'Questo colore è già stato assegnato a un altro tipo. Scegline uno diverso.',
+    ]);}else{
+        // altrimenti lo modifica
         $type->name=$data['name'];
         $type->color=$data['color'];
 
         $type->update();
 
         return redirect()->route('types.index');
+    }
+        
+        
     }
 
     /**

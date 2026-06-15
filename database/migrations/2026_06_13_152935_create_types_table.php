@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->char('color',7);
+            $table->char('color',7)->unique();
             $table->timestamps();
         });
     }
