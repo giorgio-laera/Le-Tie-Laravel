@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -23,7 +24,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $types= Type::all();
+        return view('products.create', compact('types'));
     }
 
     /**
@@ -37,7 +39,8 @@ class ProductController extends Controller
 
         $newProduct->name=$data['name'];
         $newProduct->description= $data['description'];
-
+        $newProduct->type_id= $data['type'];
+        //dd($newProduct);
         $newProduct->save();
 
         return redirect()->route('products.show', $newProduct);
@@ -48,6 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+    
         // dd($product);
         return view('products.show', compact('product'));
     }

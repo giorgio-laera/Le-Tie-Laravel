@@ -4,10 +4,19 @@
 
 @section('content')
 <form class="col-8" action="{{route('products.store')}}" method="POST">
-  <div class="form-control mb-mì3 d-flex flex-column">
+  <div class="form-control mb-3 d-flex flex-column">
     <label for="name">Nome del piatto</label>
     <input type="text" class="form-control" id="name" name="name">
    
+  </div>
+  <div class="form-control mb-3 dfle flex-column">
+    <label for="">Seleziona la tipologia</label>
+    <div>
+    @foreach ($types as $type)
+    <input type="radio" id="{{$type->name}}" value="{{$type->id}}" name="type">
+    <label for="{{$type->name}}">{{$type->name}}</label>
+    @endforeach
+    </div>
   </div>
   <div class="form-control mb-3 d-flex flex-column">
     <label for="description">Descrizione del piatto</label>

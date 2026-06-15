@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
 
             $newProduct->name=$faker->word();
             $newProduct->description=$faker->sentence();
-
+            $newProduct->type_id=$faker->numberBetween(1, 3);
             $newProduct->save();
         }
     }

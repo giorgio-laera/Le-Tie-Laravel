@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TypesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('products', ProductController::class)
+ ->middleware(['auth','verified']) ;
+ 
+Route::resource('types', TypesController::class)
  ->middleware(['auth','verified']) ;
 
 require __DIR__.'/auth.php';
