@@ -18,6 +18,7 @@
             </div>
             @enderror
         </div>
+
         <a href="{{route('types.index')}}" class="btn btn-outline-secondary">Annulla</a>
         <button class="btn btn-outline-primary">Crea nuovo tipo</button>
     </form>

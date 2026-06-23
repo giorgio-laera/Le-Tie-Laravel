@@ -5,11 +5,20 @@
 @section('content')
 <div class=" ">
 <div class="card col-12 w-50 center" >
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg" class="card-img-top" alt="...">
+  @if (!is_null($product->image))
+  <img src="{{asset("storage/".$product->image->path)}}" class="card-img-top" alt="{{$product->image->alt_text}}">
+  @endif
+  {{-- @dd($product->image->alt_text) --}}
   <div class="card-body">
-    <h5 class="card-title">{{$product->name}}</h5>
-    <p class="card-text">{{$product->type['name']}}</p>
-    <p class="card-text">{{$product->description}}</p>
+    {{-- @dd($product->image) --}}
+    <h5 class="card-title">Nome: {{$product->name}}</h5>
+    <p class="card-text">Tipologia: {{$product->type['name']}}</p>
+    <p class="card-text">Categorie: 
+      {{-- @dd($product->categories) --}}
+      @foreach ($product->categories as $category)
+          <span> {{$category->name}}</span>
+      @endforeach</p>
+    <p class="card-text">Descrizione: {{$product->description}}</p>
     <a href="{{route('products.index')}}" class="btn btn-outline-primary">Torna ai prodotti</a>
     <a href="{{route('products.edit',$product)}}" class="btn btn-outline-warning">Modifica</a>
   </div>
