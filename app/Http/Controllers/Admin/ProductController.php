@@ -35,14 +35,26 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    { 
+        // dd($request);
+         $validator=$request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'type_id' => 'required|integer|exists:types,id',
+            'img' =>'required|',
+            'alt_text' => 'nullable|string|max:255',
+            'categories' => 'required|array',
+            'categories.*' => 'integer|exists:categories,id',
+        ],
+    );
+
         $data = $request->all();
         //   dd($data);
 
         $newProduct = Product::create([
             'name'        => $data['name'],
             'description' => $data['description'],
-            'type_id'     => $data['type'],
+            'type_id'     => $data['type_id'],
         ]);
 
         $path = $data['img']->store('productsImages', 'public');
@@ -74,7 +86,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $types      = Type::all();
-       
+
         //  dd(count($product->categories));
         // dd(count($product->categories) != 0);
         if (count($product->categories) != 0) {
@@ -94,7 +106,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-
+                 $validator=$request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'categories' => 'required|array',
+            'categories.*' => 'integer|exists:categories,id',
+        ],
+        );
         $data = $request->all();
         // dd($data);
         // dd(array_key_exists('img', $data));
@@ -107,53 +125,52 @@ class ProductController extends Controller
         // dd($product->image->alt_text, $data['img']);
         //controllo se l'utente ha cambiato l'immagine
         if (array_key_exists('img', $data)) {
-            if(  ! is_null($product->image)){
-            Storage::disk('public')->delete($product->image->path);
-            $path = $data['img']->store('productsImages', 'public');
+            if (! is_null($product->image)) {
+                Storage::disk('public')->delete($product->image->path);
+                $path = $data['img']->store('productsImages', 'public');
 
-            $product->image()->update([
-                'path'     => $path,
-                'alt_text' => $data['alt_text'],
-            ]);
-            }else{
-                        $path = $data['img']->store('productsImages', 'public');
+                $product->image()->update([
+                    'path'     => $path,
+                    'alt_text' => $data['alt_text'],
+                ]);
+            } else {
+                $path = $data['img']->store('productsImages', 'public');
 
-        $product->image()->create([
-            'path'     => $path,
-            'alt_text' => $data['alt_text'],
-        ]);
+                $product->image()->create([
+                    'path'     => $path,
+                    'alt_text' => $data['alt_text'],
+                ]);
             }
-            
-        }elseif ($product->image->alt_text!=$data['alt_text']) {
+
+        } elseif ($product->image->alt_text != $data['alt_text']) {
             $product->image()->update([
-               
+
                 'alt_text' => $data['alt_text'],
             ]);
         }
 
-    
-    $product->update();
+        $product->update();
 
-    if (! empty($data['categories'])) {
-        $product->categories()->sync($data['categories']);
-    } else {
-        $product->categories()->detach();
+        if (! empty($data['categories'])) {
+            $product->categories()->sync($data['categories']);
+        } else {
+            $product->categories()->detach();
+        }
+        return redirect()->route('products.show', $product);
+
     }
-    return redirect()->route('products.show', $product);
-
-}
 
 /**
  * Remove the specified resource from storage.
  */
-public function destroy(Product $product)
-{
+    public function destroy(Product $product)
+    {
 
-    if (! is_null($product->image)) {
-        Storage::disk('public')->delete($product->image->path);
+        if (! is_null($product->image)) {
+            Storage::disk('public')->delete($product->image->path);
+        }
+        $product->delete();
+
+        return redirect()->route('products.index');
     }
-    $product->delete();
-
-    return redirect()->route('products.index');
 }
-};

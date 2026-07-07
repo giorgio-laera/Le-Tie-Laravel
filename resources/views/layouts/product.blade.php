@@ -9,10 +9,15 @@
 </head>
 <body>
     <header class="m-3">
-        
-        <h1 class="text-primary">
-    @yield('title')
-    </h1></header>
+            <header class="container mt-3">  
+        <nav class="d-flex navbar">
+             <h1 class="text-primary"> @yield('title')</h1> 
+             <div>
+            <a class="btn" href="{{ route('types.index') }}">Vai ai prodotti</a>
+            <a class="btn" href="{{ route('categories.index') }}">Vai alle categorie</a>
+            </div>
+            </nav>  
+     </header>
 
     <main class="m-3">
     @yield('content')

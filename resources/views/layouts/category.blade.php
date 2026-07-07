@@ -13,7 +13,7 @@
              <h1> @yield('title')</h1> 
              <div>
             <a class="btn" href="{{ route('products.index') }}">Vai ai prodotti</a>
-            <a class="btn" href="{{ route('products.index') }}">Vai alle categorie</a>
+            <a class="btn" href="{{ route('products.index') }}">Vai ai tipi</a>
             </div>
             </nav>  
      

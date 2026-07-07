@@ -7,9 +7,14 @@
         @csrf
         @method('put')
   <div class=" form-control mb-3 d-flex flex-column">
+    @error('name')
+        {{$message}}
+    @enderror
     <label for="name">Nome del piatto</label>
     <input type="text" class="form-control" value="{{$product->name}}" id="name" name="name">
-   
+     <div class="text-danger">@error('name')
+     {{$message}}
+    @enderror</div>
   </div>
  <div class="form-control mb-3 dfle flex-column">
     <label for="">Seleziona la tipologia</label>
@@ -19,6 +24,9 @@
     <input type="radio" id="{{$type->name}}" value="{{$type->id}}" name="type" @checked($type->id == $product->type_id)>
     <label for="{{$type->name}}">{{$type->name}}</label>
     @endforeach
+       <div class="text-danger">@error('type_id')
+     {{$message}}
+    @enderror</div>
     </div>
   </div>
 
@@ -30,6 +38,9 @@
     <input type="checkbox" id="{{$category->name}}" value="{{$category->id}}" name="categories[]" @checked(in_array($category->id, $checkCategory))>
     <label for="{{$category->name}}">{{$category->name}}</label>
     @endforeach
+       <div class="text-danger">@error('categories')
+     {{$message}}
+    @enderror</div>
         </div>
   </div>
      <div class="form-control mb-3 d-flex flex-column">
@@ -48,6 +59,9 @@
   </div>
   <div class="form-control mb-3 d-flex flex-column">
     <label for="description">Descrizione del piatto</label>
+    <div class="text-danger">@error('description')
+     {{$message}}
+    @enderror</div>
     <textarea name="description" id="descriprion"  rows="10">{{$product->description}}</textarea>
   </div>
 

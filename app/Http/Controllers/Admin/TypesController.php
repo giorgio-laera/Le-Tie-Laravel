@@ -86,7 +86,7 @@ class TypesController extends Controller
               $request->validate([
         'name' => 'required|string|max:255',
         
-        // Controlla che il colore sia HEX e che NON esista già nella tabella 'products' sotto la colonna 'color'
+        // Controlla che il colore NON esista già nella tabella 'products' sotto la colonna 'color'
         'color' => [
             'required',
             'string',
@@ -96,6 +96,7 @@ class TypesController extends Controller
     ], [
         // Compone il messaggio di errore per l'utente
         'color.unique' => 'Questo colore è già stato assegnato a un altro tipo. Scegline uno diverso.',
+
     ]);}else{
         // altrimenti lo modifica
         $type->name=$data['name'];
