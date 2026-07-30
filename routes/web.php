@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('esercizio' ,function (){
+    return view ('esercizio');
+});
+
 Route::resource('products', ProductController::class)
  ->middleware(['auth','verified']) ;
  
