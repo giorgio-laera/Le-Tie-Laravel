@@ -1,18 +1,20 @@
-# Le Tie - Street Food Menu (Client Side) 🍔🍟
+# Le Tie - Street Food Menu (Server Side API) 🛠️
 
-Welcome to the frontend repository of **Le Tie**, a responsive web application designed for a street-food restaurant menu. This side of the application provides an intuitive, fast, and visually clean user experience for customers exploring the menu.
+This is the backend API repository for **Le Tie**. It manages data persistence, the complete CRUD operations for the administration dashboard, and the relational database architecture for the street-food menu system.
 
-🔄 **Server Repository:** [Inserisci qui il link alla repo del Server]
+🔄 **Client Repository:** [Inserisci qui il link alla repo del Client]
 
-## 🚀 Features
-- **Dynamic Menu Display:** Customers can browse all available street-food items in real-time.
-- **Category Filtering:** A smooth filter system allowing users to sort products by categories (e.g., Burgers, Drinks, Sides) for a faster choice.
-- **Responsive Design:** Optimized entirely with Bootstrap to ensure a seamless ordering experience across all mobile and desktop devices.
+## 🚀 Features & Database Architecture
+- **Full CRUD Management:** An admin panel interface allows authorized users to Create, Read, Update, and Delete menu items dynamically.
+- **Advanced Menu Administration:** Complete control over categories (adding, renaming, deleting) and product associations.
+- **Decoupled Image Model:** Images are handled as a standalone model, built with future scalability in mind to support multiple images per product.
+- **Native SQL Relations:** Implemented robust **MySQL** relational integrity using the `mysql2` driver, writing custom relational queries to manage **One-to-One**, **One-to-Many**, and **Many-to-Many** mappings seamlessly.
 
 ## 🛠️ Tech Stack
-- **Frontend Framework:** React.js (JavaScript)
-- **Styling & UI Components:** Bootstrap 5
-- **API Fetching:** Fetch API / Axios
+- **Runtime Environment:** Node.js
+- **Backend Framework:** Express.js 
+- **Database:** MySQL
+- **Driver:** mysql2 (Native SQL Queries)
 
 ## 📦 Installation & Setup
 
@@ -24,8 +26,17 @@ Welcome to the frontend repository of **Le Tie**, a responsive web application d
    ```bash
    npm install
    ```
-3. Start the development server:
-   ```bash
-   npm start
+3. Configure your Environment Variables (create a `.env` file):
+   ```env
+   PORT=5000
+   DB_HOST=localhost
+   DB_USER=your_mysql_user
+   DB_PASSWORD=your_mysql_password
+   DB_NAME=le_tie_db
    ```
+4. Start the backend server:
+   ```bash
+   npm run dev
+   ```
+
 
